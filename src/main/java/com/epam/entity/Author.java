@@ -1,10 +1,12 @@
-package com.epam;
+package com.epam.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
 public class Author {
     @JsonProperty
-    private long authorId;
+    private int authorId;
     @JsonProperty
     private Name authorName;
 
@@ -24,7 +26,24 @@ public class Author {
 
         @Override
         public String toString() {
-            return "Name is: " + first + " " + second;
+            return "Name{" +
+                    "first='" + first + '\'' +
+                    ", second='" + second + '\'' +
+                    '}';
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Name name = (Name) o;
+            return Objects.equals(first, name.first) &&
+                    Objects.equals(second, name.second);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(first, second);
         }
     }
 
@@ -58,6 +77,21 @@ public class Author {
                     ", city='" + city + '\'' +
                     '}';
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Birth birth = (Birth) o;
+            return Objects.equals(date, birth.date) &&
+                    Objects.equals(country, birth.country) &&
+                    Objects.equals(city, birth.city);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(date, country, city);
+        }
     }
 
     @JsonProperty
@@ -66,7 +100,7 @@ public class Author {
     public Author() {
     }
 
-    public Author(long authorId, Name authorName, String nationality, Birth birth, String authorDescription) {
+    public Author(int authorId, Name authorName, String nationality, Birth birth, String authorDescription) {
         this.authorId = authorId;
         this.authorName = authorName;
         this.nationality = nationality;
@@ -74,11 +108,11 @@ public class Author {
         this.authorDescription = authorDescription;
     }
 
-    public long getAuthorId() {
+    public int getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(long authorId) {
+    public void setAuthorId(int authorId) {
         this.authorId = authorId;
     }
 
@@ -123,5 +157,22 @@ public class Author {
                 ", birth=" + birth +
                 ", authorDescription='" + authorDescription + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Author author = (Author) o;
+        return authorId == author.authorId &&
+                Objects.equals(authorName, author.authorName) &&
+                Objects.equals(nationality, author.nationality) &&
+                Objects.equals(birth, author.birth) &&
+                Objects.equals(authorDescription, author.authorDescription);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(authorId, authorName, nationality, birth, authorDescription);
     }
 }
