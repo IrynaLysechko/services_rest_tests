@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 import static com.epam.constants.CodeConstants.*;
 
-
 public class RestAuthorTest extends BaseTest {
 
     // Use Stream API to choose only author id.
@@ -27,8 +26,8 @@ public class RestAuthorTest extends BaseTest {
 
         List<Integer> integerList = authorList.stream().map(Author::getAuthorId).collect(Collectors.toList());
 
-        for (Integer integer : integerList) {
-            if (integer == authorID) {
+        for (Integer listId : integerList) {
+            if (listId == authorID) {
                 System.out.println("Forbidden use this ID");
                 break;
             }

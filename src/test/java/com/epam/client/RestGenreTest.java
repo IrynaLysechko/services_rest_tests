@@ -16,7 +16,6 @@ public class RestGenreTest extends BaseTest {
 
     @Test
     public void getAllGenresOfSpecialAuthorTest() {
-
         Response response = restGenre.getAllGenresOfSpecialAuthor(6126, "desc");
         Assert.assertEquals(HTTP_200, response.getStatus());
 
