@@ -17,7 +17,7 @@ public class RestAuthorTest extends BaseTest {
 
     // Use Stream API to choose only author id.
     // If such id present in database, forbidden create author
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public static void createNewAuthor() {
         final int authorID = 4123;
         Response response = restAuthor.getAllAuthorWithCustomSize(50);
@@ -41,7 +41,7 @@ public class RestAuthorTest extends BaseTest {
         author.setAuthorDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
     }
 
-    @Test
+    @Test(groups = { "positive" })
     public void createNewAuthor_whenCreated_HttpCodeSuccess() {
         Response response = restAuthor.createJsonAuthor(author);
         Assert.assertEquals(response.getStatus(), HTTP_201);
@@ -54,7 +54,7 @@ public class RestAuthorTest extends BaseTest {
     }
 
     //Get author with existing ID - positive test case
-    @Test
+    @Test(groups = { "positive" })
     public void getAuthorWithExistingId_serviceCodeSuccess() {
         Response createResponse = restAuthor.createJsonAuthor(author);
         Assert.assertEquals(createResponse.getStatus(), HTTP_201);
@@ -70,7 +70,7 @@ public class RestAuthorTest extends BaseTest {
     }
 
     //Get author with not existing ID - negative test case
-    @Test
+    @Test(groups = "negative")
     public void getAuthorWithInvalidID_ServiceCode_Error() {
         final String errorMessage = "Not Found";
 
@@ -82,7 +82,7 @@ public class RestAuthorTest extends BaseTest {
     }
 
     //Get list of all authors
-    @Test
+    @Test(groups = { "positive" })
     public void getListOfAllAuthor() {
         final int defaultAuthorListSize = 10;
 
@@ -95,7 +95,7 @@ public class RestAuthorTest extends BaseTest {
     }
 
     //Update author name
-    @Test
+    @Test(groups = { "positive" })
     public void update_Get_DeleteAuthor() {
         Response createResponse = restAuthor.createJsonAuthor(author);
         Assert.assertEquals(createResponse.getStatus(), HTTP_201);
@@ -113,7 +113,7 @@ public class RestAuthorTest extends BaseTest {
         Assert.assertEquals(responseDelete.getStatus(), HTTP_204, "Cannot delete author");
     }
 
-    @Test
+    @Test(groups = { "positive" })
     public void deleteAuthor_ifRequestCorrect_successStatusCode() {
         final String ERROR_MESSAGE = "No Content";
 

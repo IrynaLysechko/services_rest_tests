@@ -21,7 +21,7 @@ public class RestBookAuthorTest extends BaseTest {
     }
 
     //query string parameter
-    @Test
+    @Test(groups = { "positive" })
     public void searchForBooksByBookNameTest() {
         final int listSize = 5;
 
@@ -34,7 +34,7 @@ public class RestBookAuthorTest extends BaseTest {
     }
 
     //Negative test case
-    @Test
+    @Test (groups = "negative")
     public void getAllBookOfSpecificGenreTest() {
         final String error_message = "Not Found";
 

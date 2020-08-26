@@ -13,7 +13,7 @@ public class BaseTest {
     protected static RestBook restBook;
     protected static RestGenre restGenre;
 
-    @BeforeSuite
+    @BeforeSuite(alwaysRun = true)
     public static void initialize() {
         author = new Author();
         restAuthor = new RestAuthor();
