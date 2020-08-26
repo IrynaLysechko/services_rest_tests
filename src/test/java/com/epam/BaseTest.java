@@ -4,7 +4,8 @@ import com.epam.client.RestAuthor;
 import com.epam.client.RestBook;
 import com.epam.client.RestGenre;
 import com.epam.entity.Author;
-import org.junit.BeforeClass;
+import org.testng.annotations.BeforeSuite;
+
 
 public class BaseTest {
     protected static Author author;
@@ -12,7 +13,7 @@ public class BaseTest {
     protected static RestBook restBook;
     protected static RestGenre restGenre;
 
-    @BeforeClass
+    @BeforeSuite
     public static void initialize() {
         author = new Author();
         restAuthor = new RestAuthor();

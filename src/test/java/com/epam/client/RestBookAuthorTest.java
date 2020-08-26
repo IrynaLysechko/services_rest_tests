@@ -2,8 +2,8 @@ package com.epam.client;
 
 import com.epam.BaseTest;
 import com.epam.entity.Book;
-import org.junit.Assert;
-import org.junit.Test;
+import org.testng.*;
+import org.testng.annotations.Test;
 
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -17,14 +17,7 @@ public class RestBookAuthorTest extends BaseTest {
     @Test
     public void getAllBooksOfSpecialAuthorInSpecialGenreTest() {
         Response response = restBook.getAllBooksOfSpecialAuthorInSpecialGenre(1408, 5033);
-        Assert.assertEquals(HTTP_200, response.getStatus());
-
-        List<Book> bookList = response.readEntity(new GenericType<List<Book>>() {
-        });
-
-        for (Book book : bookList) {
-            System.out.println(book);
-        }
+        Assert.assertEquals(response.getStatus(), HTTP_200);
     }
 
     //query string parameter
@@ -33,11 +26,11 @@ public class RestBookAuthorTest extends BaseTest {
         final int listSize = 5;
 
         Response response = restBook.searchByBookName("Excepturi non odio");
-        Assert.assertEquals(HTTP_200, response.getStatus());
+        Assert.assertEquals(response.getStatus(), HTTP_200);
 
         List<Book> bookList = response.readEntity(new GenericType<List<Book>>() {
         });
-        Assert.assertEquals(listSize, bookList.size());
+        Assert.assertEquals(bookList.size(), listSize);
     }
 
     //Negative test case
@@ -46,9 +39,9 @@ public class RestBookAuthorTest extends BaseTest {
         final String error_message = "Not Found";
 
         Response response = restBook.getAllBookOfSpecificGenre(12);
-        Assert.assertEquals(HTTP_404, response.getStatus());
+        Assert.assertEquals(response.getStatus(), HTTP_404);
 
         Response.StatusType message = response.getStatusInfo();
-        Assert.assertEquals(error_message, message.getReasonPhrase());
+        Assert.assertEquals(message.getReasonPhrase(), error_message);
     }
 }

@@ -2,7 +2,9 @@ package com.epam.client;
 
 import com.epam.BaseTest;
 import com.epam.entity.Author;
-import org.junit.*;
+import org.testng.*;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -19,7 +21,7 @@ public class RestAuthorTest extends BaseTest {
     public static void createNewAuthor() {
         final int authorID = 4123;
         Response response = restAuthor.getAllAuthorWithCustomSize(50);
-        Assert.assertEquals(HTTP_200, response.getStatus());
+        Assert.assertEquals(response.getStatus(), HTTP_200);
 
         List<Author> authorList = response.readEntity(new GenericType<List<Author>>() {
         });
@@ -42,29 +44,29 @@ public class RestAuthorTest extends BaseTest {
     @Test
     public void createNewAuthor_whenCreated_HttpCodeSuccess() {
         Response response = restAuthor.createJsonAuthor(author);
-        Assert.assertEquals(HTTP_201, response.getStatus());
+        Assert.assertEquals(response.getStatus(), HTTP_201);
 
         Author authorResponse = response.readEntity(Author.class);
-        Assert.assertEquals("Authors are not equals", author, authorResponse);
+        Assert.assertEquals(authorResponse, author, "Authors are not equals");
 
         Response responseDelete = restAuthor.deleteAuthor(author.getAuthorId());
-        Assert.assertEquals("Cannot delete author", HTTP_204, responseDelete.getStatus());
+        Assert.assertEquals(responseDelete.getStatus(), HTTP_204, "Cannot delete author");
     }
 
     //Get author with existing ID - positive test case
     @Test
     public void getAuthorWithExistingId_serviceCodeSuccess() {
         Response createResponse = restAuthor.createJsonAuthor(author);
-        Assert.assertEquals(HTTP_201, createResponse.getStatus());
+        Assert.assertEquals(createResponse.getStatus(), HTTP_201);
 
         Response getAuthorResponse = restAuthor.getJsonAuthor(author.getAuthorId());
-        Assert.assertEquals(HTTP_200, getAuthorResponse.getStatus());
+        Assert.assertEquals(getAuthorResponse.getStatus(), HTTP_200);
 
         Author responseAuthor = getAuthorResponse.readEntity(Author.class);
-        Assert.assertEquals(author.getAuthorId(), responseAuthor.getAuthorId());
+        Assert.assertEquals(responseAuthor.getAuthorId(), author.getAuthorId());
 
         Response response = restAuthor.deleteAuthor(author.getAuthorId());
-        Assert.assertEquals(HTTP_204, response.getStatus());
+        Assert.assertEquals(response.getStatus(), HTTP_204);
     }
 
     //Get author with not existing ID - negative test case
@@ -73,10 +75,10 @@ public class RestAuthorTest extends BaseTest {
         final String errorMessage = "Not Found";
 
         Response response = restAuthor.getJsonAuthor(1);
-        Assert.assertEquals(HTTP_404, response.getStatus());
+        Assert.assertEquals(response.getStatus(), HTTP_404);
 
         Response.StatusType responseMessage = response.getStatusInfo();
-        Assert.assertEquals(errorMessage, responseMessage.getReasonPhrase());
+        Assert.assertEquals(responseMessage.getReasonPhrase(), errorMessage);
     }
 
     //Get list of all authors
@@ -85,30 +87,30 @@ public class RestAuthorTest extends BaseTest {
         final int defaultAuthorListSize = 10;
 
         Response response = restAuthor.getAllAuthor();
-        Assert.assertEquals(HTTP_200, response.getStatus());
+        Assert.assertEquals(response.getStatus(), HTTP_200);
 
         List<Author> authorList = response.readEntity(new GenericType<List<Author>>() {
         });
-        Assert.assertEquals(defaultAuthorListSize, authorList.size());
+        Assert.assertEquals(authorList.size(), defaultAuthorListSize);
     }
 
     //Update author name
     @Test
     public void update_Get_DeleteAuthor() {
         Response createResponse = restAuthor.createJsonAuthor(author);
-        Assert.assertEquals(HTTP_201, createResponse.getStatus());
+        Assert.assertEquals(createResponse.getStatus(), HTTP_201);
 
         Author authorResponse = createResponse.readEntity(Author.class);
         authorResponse.setAuthorName(new Author.Name("Olena", "Lysechko"));
 
         Response response = restAuthor.updateExistingAuthor(authorResponse);
-        Assert.assertEquals("Cannot update existing author", HTTP_200, response.getStatus());
+        Assert.assertEquals(response.getStatus(), HTTP_200, "Cannot update existing author");
 
         Author responseAuthor = response.readEntity(Author.class);
         Assert.assertEquals(authorResponse, responseAuthor);
 
         Response responseDelete = restAuthor.deleteAuthor(author.getAuthorId());
-        Assert.assertEquals("Cannot delete author", HTTP_204, responseDelete.getStatus());
+        Assert.assertEquals(responseDelete.getStatus(), HTTP_204, "Cannot delete author");
     }
 
     @Test
@@ -116,12 +118,12 @@ public class RestAuthorTest extends BaseTest {
         final String ERROR_MESSAGE = "No Content";
 
         Response responseCreate = restAuthor.createJsonAuthor(author);
-        Assert.assertEquals("Cannot create author", HTTP_201, responseCreate.getStatus());
+        Assert.assertEquals(responseCreate.getStatus(), HTTP_201, "Cannot create author");
 
         Response responseDelete = restAuthor.deleteAuthor(author.getAuthorId());
-        Assert.assertEquals("Cannot delete author", HTTP_204, responseDelete.getStatus());
+        Assert.assertEquals(responseDelete.getStatus(), HTTP_204, "Cannot delete author");
 
         Response.StatusType responseMessage = responseDelete.getStatusInfo();
-        Assert.assertEquals(ERROR_MESSAGE, responseMessage.getReasonPhrase());
+        Assert.assertEquals(responseMessage.getReasonPhrase(), ERROR_MESSAGE);
     }
 }
