@@ -1,1 +1,4 @@
-"# ta_hw_services_rest_tests" 
+
+Tests for a simple REST API that represent Library: https://github.com/RomanShmandrovskyi/REST-library-API
+
+
