@@ -20,7 +20,6 @@ public class RestBookAuthorTest extends BaseTest {
         Assert.assertEquals(response.getStatus(), HTTP_200);
     }
 
-    //query string parameter
     @Test(groups = { "positive" })
     public void searchForBooksByBookNameTest() {
         final int listSize = 5;
@@ -33,7 +32,6 @@ public class RestBookAuthorTest extends BaseTest {
         Assert.assertEquals(bookList.size(), listSize);
     }
 
-    //Negative test case
     @Test (groups = "negative")
     public void getAllBookOfSpecificGenreTest() {
         final String error_message = "Not Found";

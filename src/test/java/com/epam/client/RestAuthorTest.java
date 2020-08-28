@@ -15,8 +15,6 @@ import static com.epam.constants.CodeConstants.*;
 
 public class RestAuthorTest extends BaseTest {
 
-    // Use Stream API to choose only author id.
-    // If such id present in database, forbidden create author
     @BeforeClass(alwaysRun = true)
     public static void createNewAuthor() {
         final int authorID = 4123;
@@ -53,7 +51,6 @@ public class RestAuthorTest extends BaseTest {
         Assert.assertEquals(responseDelete.getStatus(), HTTP_204, "Cannot delete author");
     }
 
-    //Get author with existing ID - positive test case
     @Test(groups = { "positive" })
     public void getAuthorWithExistingId_serviceCodeSuccess() {
         Response createResponse = restAuthor.createJsonAuthor(author);
@@ -69,7 +66,6 @@ public class RestAuthorTest extends BaseTest {
         Assert.assertEquals(response.getStatus(), HTTP_204);
     }
 
-    //Get author with not existing ID - negative test case
     @Test(groups = "negative")
     public void getAuthorWithInvalidID_ServiceCode_Error() {
         final String errorMessage = "Not Found";
@@ -81,7 +77,6 @@ public class RestAuthorTest extends BaseTest {
         Assert.assertEquals(responseMessage.getReasonPhrase(), errorMessage);
     }
 
-    //Get list of all authors
     @Test(groups = { "positive" })
     public void getListOfAllAuthor() {
         final int defaultAuthorListSize = 10;
@@ -94,7 +89,6 @@ public class RestAuthorTest extends BaseTest {
         Assert.assertEquals(authorList.size(), defaultAuthorListSize);
     }
 
-    //Update author name
     @Test(groups = { "positive" })
     public void update_Get_DeleteAuthor() {
         Response createResponse = restAuthor.createJsonAuthor(author);
